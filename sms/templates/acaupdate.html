@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: rgb(232, 218, 226);
+            background-size: 100% 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 5px;
+            overflow: hidden;
+            background-color: #1a43bf;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+        }
+
+        .b1 {
+            padding-left: 20px;
+            color:  #efd8b8;
+            font: 30px Arial, sans-serif;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        /* Form Container */
+        .form-container {
+            max-width: 80%;
+            background: #efd8b8;
+            border-radius: 10px;
+            margin: 50px auto 30px;
+            padding: 10px;
+            border: 2px solid rgb(72, 69, 74);
+        }
+
+        /* Form Title */
+        h3 {
+            font-size: 1.3rem;
+            text-align: center;
+           
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        /* Form Grid Styling */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        /* Two-column Layout for Larger Screens */
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr; /* Two columns */
+            }
+        }
+
+        label {
+            font: 18px Arial, sans-serif;
+            color: black;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type=text], input[type=file], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+            border: 2px solid black;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: #1a43bf;
+            color: white;
+            padding: 20px 90px;
+            margin: 20px auto;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+        }
+
+        input[type=submit]:hover {
+            background-color: #143397;
+        }
+
+        .form-section {
+            background-color: #efd8b8;
+            padding: 20px;
+            border: 1.5px solid black;
+            border-radius: 10px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+
+            input[type=text], input[type=file], select {
+                font-size: 14px;
+            }
+
+            input[type=submit] {
+                width: 100%;
+                padding: 15px;
+            }
+            .form-section {
+            background-color:  #efd8b8;
+            padding: 20px;
+           
+            border-radius: 10px;
+        }
+        .form-container {
+            max-width: 1200px;
+            margin: 20px;
+            padding: 20px;
+            background: #efd8b8;
+            border: #333335;
+            border-radius: 10px;
+        }
+        }
+    </style>
+    </head>
+    <body>
+        <ul>
+            <b class="b1">KSSEM ECE</b>
+        </ul>
+        <br><br><br><br><br><br>
+
+        <div class="form-container">
+            <form action="" method="POST" name="aca_data" enctype="multipart/form-data">
+                <h3>Update Academic Details</h3>
+                <hr>
+
+                <!-- Form Grid -->
+                <div class="form-grid">
+                    <!-- 10th Details -->
+                    <div class="form-section">
+                        <label>10th:</label>
+                        <label>Name of Institution:</label>
+                        <input type="text" name="school" value="{{record.school}}" placeholder="Enter school Name" required>
+                        <label>Year of passing:</label>
+                        <input type="text" name="year" value="{{ record.year }}" placeholder="Year of passing" required>
+                        <label>Class obtained:</label>
+                        <input type="text" name="classs" value="{{ record.classs }}" placeholder="Enter class obtained" required>
+                        <label>Upload Certificate:</label>
+                        <input type="file" name="tenth_file" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+
+                    <!-- 12th/Diploma Details -->
+                    <div class="form-section">
+                        <label>12th/Diploma:</label>
+                        <label>Name of Institution:</label>
+                        <input type="text" name="college" value="{{ record.college }}" placeholder="Enter college Name" required>
+                        <label>Year of passing:</label>
+                        <input type="text" name="passyear" value="{{ record.passyear }}" placeholder="Enter passing year" required>
+                        <label>Class obtained:</label>
+                        <input type="text" name="grade" value="{{ record.grade }}" placeholder="Enter class obtained" required>
+                        <label>Upload Certificate:</label>
+                        <input type="file" name="puc_file" accept=".pdf,.jpg,.jpeg,.png" >
+                    </div>
+
+                    <!-- Co-Curricular Section -->
+                    <div class="form-section">
+                        <h4>Co-Curricular Activities:</h4>
+                        <label>Hobbies & Activities:</label>
+                        <input type="text" name="hobby" value="{{ record.hobby }}" placeholder="Enter Here" required>
+                        <label>Achievements:</label>
+                        <input type="text" name="achieve" value="{{ record.achieve }}"  placeholder="Enter Here" required>
+                        <label>Upload Achievements:</label>
+                        <input type="file" name="awards_file" accept=".pdf,.jpg,.jpeg,.png" >
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <input type="submit" value="Update">
+            </form>
+        </div>
+    </body>
+</html>

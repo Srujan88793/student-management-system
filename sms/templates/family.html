@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(232, 218, 226);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: black;
+            margin-top: 20px;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px 15px;
+            text-align: left;
+            border-right: 1px solid gray; /* Separation line between columns */
+        }
+
+        th {
+            background-color: #efd8b8;
+            color: black;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #1A43BF;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .b1 {
+            padding-left: 20px;
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            a {
+                font-size: 12px;
+            }
+        }
+
+
+</style>
+</head>
+<body>
+    <ul>
+        <b class="b1">KSSEM ECE</b>
+    </ul><br><br><br><br>
+
+    <h1 style="text-align: left;margin-left: 22px;">Parent Details</h1>
+
+    <!-- Search Form -->
+    <form method="get" action="/family" style="margin: 20px; display: flex; align-items: center;">
+        <input   type="text"  name="search" placeholder="Search by Father, Mother, or Guardian Name" value="{{ search_query }}" 
+        style="width:25%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button 
+            type="submit" style="margin-left: 10px; background-color: #007BFF; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">
+            Search
+        </button>
+    </form>
+
+    <button onclick="location.href='/download'" style=" width: 20%;margin-left: 20px;background-color:#007BFF; color: white; padding: 10px 5px; font-size: 14px; border-radius: 5px; cursor: pointer;">
+        Download All Records
+    </button>
+    <table>
+        <tr>
+            <th>Father Photo</th>
+            <th>Father Name</th>
+            <th>Father Occupation</th>
+            <th>Father Mobile</th>
+            <th>Father Email</th>
+            <th>Mother Photo</th>
+            <th>Mother Name</th>
+            <th>Mother Occupation</th>
+            <th>Mother Mobile</th>
+            <th>Guardian Photo</th>
+            <th>Guardian Name</th>
+            <th>Guardian Occupation</th>
+            <th>Guardian Mobile</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for parent in parents %}
+        <tr>
+            <td><img src="{{ url_for('static', filename='uploads/' + parent.father_photo) }}" alt="Father Photo" width="100px"></td>
+            <td>{{ parent.father_name }}</td>
+            <td>{{ parent.father_occupation }}</td>
+            <td>{{ parent.father_mobile }}</td>
+            <td>{{ parent.father_email }}</td>
+            <td><img src="{{ url_for('static', filename='uploads/' + parent.mother_photo) }}" alt="Mother Photo" width="100px"></td>
+            <td>{{ parent.mother_name }}</td>
+            <td>{{ parent.mother_occupation }}</td>
+            <td>{{ parent.mother_mobile }}</td>
+            <td><img src="{{ url_for('static', filename='uploads/' + parent.guardian_photo) }}" alt="Guardian Photo" width="100px"></td>
+            <td>{{ parent.guardian_name }}</td>
+            <td>{{ parent.guardian_occupation }}</td>
+            <td>{{ parent.guardian_mobile }}</td>
+            <td class="actions">
+                <button onclick="location.href='/update_parent/{{ parent.id }}'" style="background-color: green; color: white; padding: 10px 28px; font-size: 14px; border-radius: 5px;">Update</button><br><br>
+                <button class="delete" onclick="confirmDelete('/delete_parent/{{ parent.id }}')" style="background-color: #f44336; color: white; padding: 10px 30px; font-size: 14px; border-radius: 5px;">Delete</button><br><br>
+               
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+        // JavaScript function to confirm before deleting
+        function confirmDelete(url) {
+            if (confirm("Are you sure you want to delete this parent?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+
+</body>
+</html>

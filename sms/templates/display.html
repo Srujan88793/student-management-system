@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+      /* General Body Styling */
+      body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(232, 218, 226);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: black;
+            margin-top: 20px;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px 15px;
+            text-align: left;
+            border-right: 1px solid gray; /* Separation line between columns */
+        }
+
+        th {
+            background-color: #efd8b8;
+            color: black;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #1A43BF;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .b1 {
+            padding-left: 20px;
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            a {
+                font-size: 12px;
+            }
+        }
+
+</style>
+</head>
+<body>
+    <ul>
+        <b class="b1">KSSEM ECE</b>
+    </ul><br><br><br><br>
+
+    <h1 style="text-align: left;margin-left: 22px;">Student Data</h1>
+
+    <!-- Search Form -->
+    <form action="/display" method="get" style="margin: 20px; display: flex; align-items: center;">
+        <input type="text" name="search" value="{{ search_query }}" placeholder="Search by Name, USN, or Branch" 
+               style="width:25%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        <button type="submit" style="margin-left: 10px; background-color: #007BFF; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">
+            Search
+        </button>
+    </form>
+    <td style="padding-right: 10px ;"><button onclick="location.href='/download'" style=" width: 20%;margin-left: 20px;background-color:#007BFF; color: white; padding: 10px 5px; font-size: 14px; border-radius: 5px; cursor: pointer;">
+        Download All Records
+    </button></td> 
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>USN</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>CET Rank</th>
+            <th>COMEDK Rank</th>
+            <th>Aadhaar</th>
+            <th>Day Scholar/Hosteller</th>
+            <th>Branch</th>
+            <th>Present Address</th>
+            <th>Permanent Address</th>
+            <th>Mobile Number</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.id }}</td>
+            <td>
+                {% if student.photo %}
+                <img src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Photo" width="100">
+                {% else %}
+                No Photo
+                {% endif %}
+            </td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.usn }}</td>
+            <td>{{ student.dob }}</td>
+            <td>{{ student.gender }}</td>
+            <td>{{ student.cetrank }}</td>
+            <td>{{ student.comedk }}</td>
+            <td>{{ student.aadhaarnumber }}</td>
+            <td>{{ student.dayscholar }}</td>
+            <td>{{ student.branch }}</td>
+            <td>{{ student.presentaddress }}</td>
+            <td>{{ student.permanentaddress }}</td>
+            <td>{{ student.mobilenumber }}</td>
+            <td>{{ student.email }}</td>
+            <td class="actions">
+                <button onclick="location.href='/update/{{ student.id }}'" style="background-color: green; color: white; padding: 10px 28px; font-size: 14px; border-radius: 5px;">Update</button><br><br>
+                <button class="delete" onclick="confirmDelete('/delete/{{ student.id }}')" style="background-color: #f44336; color: white; padding: 10px 30px; font-size: 14px; border-radius: 5px;">Delete</button><br><br>
+               
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function confirmDelete(url) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
+</html>
